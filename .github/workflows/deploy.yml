@@ -29,7 +29,12 @@ jobs:
         run: npm run build  # Only build is needed; export is not required
 
       - name: Verify 'out/' directory exists
-        run: ls -la out/ || (echo "❌ ERROR: 'out/' directory not found!" && exit 1)
+        run: |
+          if [ -d out ]; then
+            echo "✅ 'out/' directory found!"
+          else
+            echo "❌ ERROR: 'out/' directory not found!" && exit 1
+          fi
 
       - name: Upload build to S3
         env:
